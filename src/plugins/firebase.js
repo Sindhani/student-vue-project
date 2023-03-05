@@ -1,8 +1,6 @@
 import {initializeApp} from 'firebase/app'
-import {getFirestore} from 'firebase/firestore'
-
-import {getDatabase, ref as dbRef} from 'firebase/database'
-// ... other firebase imports
+import {getFirestore, collection} from 'firebase/firestore'
+import {getAuth} from 'firebase/auth'
 
 export const firebaseApp = initializeApp({
   databaseURL: 'https://student-b5ca1-default-rtdb.firebaseio.com/',
@@ -16,7 +14,8 @@ export const firebaseApp = initializeApp({
 })
 
 // used for the databas refs
-const db = getDatabase(firebaseApp)
+export const db = getFirestore(firebaseApp)
 
 // here we can export reusable database references
-export const todosRef = dbRef(db, 'student')
+export const studentsRef = collection(db, 'students')
+export const auth = getAuth(firebaseApp)
