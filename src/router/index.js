@@ -37,6 +37,14 @@ const routes = [
           auth: true
         },
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/TheStudents.vue')
+      },
+      {
+        path: 'exams',
+        name: 'exams',
+        meta: {
+          auth: true
+        },
+        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/TheExams.vue')
       }
     ],
   },

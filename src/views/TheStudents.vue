@@ -3,7 +3,7 @@
 
     <v-card-tit class="d-flex justify-space-between p-5">
       <h2>Students & Exams</h2>
-      <v-btn @click="dialogue= true">Add </v-btn>
+      <v-btn @click="dialogue= true">Add</v-btn>
     </v-card-tit>
     <v-layout>
       <v-main style="height: 100%;">
@@ -21,7 +21,7 @@
                 Class
               </th>
               <th>
-                Exam
+                Actions
               </th>
             </tr>
             </thead>
@@ -30,13 +30,13 @@
               v-for="item in students"
               :key="item.name"
             >
+
               <td>{{ item.name }}</td>
               <td>{{ item.age }}</td>
               <td>{{ item.class }}</td>
               <td>
-                <ul v-for="exam in item.exams">
-                  <li>{{exam.name}} - {{exam.date}}</li>
-                </ul>
+                <v-icon size="large" icon="mdi-eye" @click="update(item)"></v-icon>
+                <v-icon size="large" icon="mdi-delete-circle" @click="deleteRow(item.id)"></v-icon>
 
               </td>
             </tr>
@@ -47,17 +47,42 @@
     </v-layout>
   </v-card>
   <add-new-student-dialogue v-model="dialogue"></add-new-student-dialogue>
+  <edit-student-dialogue v-model="editDialogue" :form="form" @update-row="onUpdate"></edit-student-dialogue>
 </template>
 
 <script setup>
 import {ref} from "vue";
 
 const dialogue = ref(false)
+const editDialogue = ref(false)
+import {doc, deleteDoc, updateDoc} from "firebase/firestore";
+
+const form = ref({
+    name: null,
+    class: null,
+    age: null,
+    email: null,
+    password: null
+  }
+)
+
+
 import AddNewStudentDialogue from "@/components/AddNewStudentDialogue.vue";
+import EditStudentDialogue from "@/components/EditStudentDialogue.vue";
 import {useFirestore, useCollection} from 'vuefire'
 import {collection} from 'firebase/firestore'
+
 const db = useFirestore()
 const students = useCollection(collection(db, 'students'))
+
+function update(item) {
+  form.value = item
+  editDialogue.value = true
+}
+
+const deleteRow = async (id) => {
+  await deleteDoc(doc(db, "students", id));
+}
 
 
 

@@ -18,4 +18,5 @@ export const db = getFirestore(firebaseApp)
 
 // here we can export reusable database references
 export const studentsRef = collection(db, 'students')
+export const examsRef = collection(db, 'exams')
 export const auth = getAuth(firebaseApp)

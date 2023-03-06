@@ -47,31 +47,6 @@
               </v-col>
             </v-row>
             <v-divider></v-divider>
-            <v-col
-              cols="12"
-              sm="6"
-              md="6"
-            >
-              <v-text-field
-                label="User Email"
-                type="email"
-                v-model="form.email"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col
-              cols="12"
-              sm="6"
-              md="6"
-            >
-              <v-text-field
-                label="User Password"
-                type="password"
-                v-model="form.password"
-                required
-              ></v-text-field>
-            </v-col>
-
           </v-container>
         </v-card-text>
         <v-card-actions>
@@ -99,46 +74,28 @@
 </template>
 
 <script setup>
-import {defineProps, defineEmits, reactive, ref} from "vue";
+import {defineProps, defineEmits, ref} from "vue";
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import {auth} from '@/plugins/firebase'
 
 import {studentsRef} from '@/plugins/firebase'
-import {doc, setDoc} from "firebase/firestore";
+import {doc, setDoc, updateDoc} from "firebase/firestore";
 
-const form = reactive({
-  name: null,
-  age: null,
-  class: null,
-  email: null,
-  password: null
-})
 
-defineProps(['modelValue'])
+const props = defineProps(['modelValue', 'form'])
 
 const emit = defineEmits(['update:modelValue'])
 const loader = ref(false)
 const toggleLoader = () => {
-  loader.value = ! loader.value
+  loader.value = !loader.value
 }
 // Add a new document in collection "students"
 const save = async () => {
   toggleLoader()
-  await createUser()
-  await setDoc(doc(studentsRef, "students"), {
-    name: form.name,
-    age: form.age,
-    class: form.class,
-  });
+  const docRef = doc(studentsRef, 'students');
+  await updateDoc(docRef, props.form);
   toggleLoader()
   emit('update:modelValue', false)
-}
-const createUser = async () => {
-  const {user} = await createUserWithEmailAndPassword(auth, form.email, form.password)
-  if (user.email) {
-    return user
-  }
-
 }
 
 

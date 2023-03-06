@@ -6,7 +6,7 @@
 
 // Components
 import App from './App.vue'
-
+import dayjs from 'dayjs'
 // Composables
 import { createApp } from 'vue'
 
@@ -14,7 +14,7 @@ import { createApp } from 'vue'
 import { registerPlugins } from '@/plugins'
 
 const app = createApp(App)
-
+app.provide('dayJs', dayjs)
 registerPlugins(app)
 
 app.mount('#app')
