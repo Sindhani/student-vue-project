@@ -3,7 +3,7 @@ import {createRouter, createWebHistory,} from 'vue-router'
 import {useAppStore} from "@/store/app";
 const routes = [
   {
-    path: '/login',
+    path: '/',
     name: 'Home',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -18,7 +18,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "register" */ '@/views/Register.vue'),
   },
   {
-    path: '/',
+    path: '/dashboard',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
 
@@ -31,7 +31,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue')
       },
       {
-        path: 'students',
+        path: '/students',
         name: 'students',
         meta: {
           auth: true
@@ -39,7 +39,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/TheStudents.vue')
       },
       {
-        path: 'exams',
+        path: '/exams',
         name: 'exams',
         meta: {
           auth: true
@@ -60,7 +60,7 @@ router.beforeEach((to) => {
   if (to.meta.auth && store.getUser) {
       return true
   } else {
-    return '/login'
+    return '/'
   }
 })
 

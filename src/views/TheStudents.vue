@@ -55,7 +55,7 @@ import {ref} from "vue";
 
 const dialogue = ref(false)
 const editDialogue = ref(false)
-import {doc, deleteDoc, updateDoc} from "firebase/firestore";
+import {doc, deleteDoc, updateDoc, query, where} from "firebase/firestore";
 
 const form = ref({
     name: null,

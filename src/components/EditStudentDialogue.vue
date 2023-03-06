@@ -75,11 +75,9 @@
 
 <script setup>
 import {defineProps, defineEmits, ref} from "vue";
-import {createUserWithEmailAndPassword} from 'firebase/auth'
-import {auth} from '@/plugins/firebase'
 
 import {studentsRef} from '@/plugins/firebase'
-import {doc, setDoc, updateDoc} from "firebase/firestore";
+import {doc,updateDoc} from "firebase/firestore";
 
 
 const props = defineProps(['modelValue', 'form'])

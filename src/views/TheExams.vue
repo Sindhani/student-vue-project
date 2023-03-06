@@ -24,7 +24,7 @@
               v-for="exam in exams"
               :key="exam.name"
             >
-              <td>{{ exam }}</td>
+              <td>{{ exam.exam_name }}</td>
               <td>{{ dayJs(exam.schedule_on.seconds).format('DD-MM-YYYY') }}</td>
               <td>
                 <v-icon size="large" icon="mdi-eye"></v-icon>
