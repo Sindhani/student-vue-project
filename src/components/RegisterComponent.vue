@@ -17,6 +17,7 @@
             <v-btn type="submit" block color="success" class="mt-2" @click="login()" :loading="loader">Register</v-btn>
           </div>
         </v-form>
+        <p v-if="errors" class="text-red mt-5">{{errors}}</p>
       </v-sheet>
     </v-responsive>
   </v-container>
@@ -38,14 +39,20 @@ const toggleLoader = () => {
   loader.value = !loader.value
 }
 const router = useRouter()
+const errors = ref('')
 
 const login = async () => {
   toggleLoader()
-  const {user} = await createUserWithEmailAndPassword(auth, form.email, form.password)
-  store.login(user)
-  if (user.email) {
-    await router.push('/students')
+  try {
+    const {user} = await createUserWithEmailAndPassword(auth, form.email, form.password)
+    store.login(user)
+    if (user.email) {
+      await router.push('/students')
+    }
+  } catch (e) {
+    errors.value = e.message
   }
+
   toggleLoader()
 
 }
