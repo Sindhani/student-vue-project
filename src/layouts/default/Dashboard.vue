@@ -22,7 +22,7 @@
   const store = useAppStore()
   const logout = () => {
     store.logout()
-    router.push('/login')
+    router.push('/')
 
   }
 
