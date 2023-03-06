@@ -75,7 +75,9 @@
           </v-container>
         </v-card-text>
         <v-card-actions>
+          <p v-if="errors" class="text-red">{{errors}}</p>
           <v-spacer></v-spacer>
+
           <v-btn
             color="blue-darken-1"
             variant="text"
@@ -88,6 +90,7 @@
           <v-btn
             color="blue-darken-1"
             variant="text"
+            :loading="loader"
             @click="save"
           >
             Save
@@ -118,6 +121,7 @@ defineProps(['modelValue'])
 
 const emit = defineEmits(['update:modelValue'])
 const loader = ref(false)
+const errors = ref('')
 const toggleLoader = () => {
   loader.value = ! loader.value
 }
@@ -134,10 +138,17 @@ const save = async () => {
   emit('update:modelValue', false)
 }
 const createUser = async () => {
-  const {user} = await createUserWithEmailAndPassword(auth, form.email, form.password)
-  if (user.email) {
-    return user
+  try{
+    const {user} = await createUserWithEmailAndPassword(auth, form.email, form.password)
+    if (user.email) {
+      return user
+    }
+  } catch (e){
+    errors.value = e.message
+  } finally {
+    toggleLoader()
   }
+
 
 }
 
