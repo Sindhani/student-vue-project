@@ -3,7 +3,7 @@
     <v-layout>
       <v-app-bar color="surface-variant" title="Student Exams Project">
         <template v-slot:append>
-          <v-btn @click="logout" color="red">Logout</v-btn>
+          <v-btn @click="logout" color="red" variant="outlined"> <v-icon icon="mdi-logout"/>Logout</v-btn>
         </template>
       </v-app-bar>
       <sidebar-menu></sidebar-menu>

@@ -1,12 +1,10 @@
 <template>
   <v-navigation-drawer
     permanent
-    :rail="rail"
-    @click="toggleMenu"
   >
     <v-list-item
       prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-      title="John Leider"
+      :title="isAdmin"
       nav
     >
       <template v-slot:append>
@@ -26,7 +24,7 @@
         :to="link.value"
         :value="link.value"
         v-for="link in links">
-        {{link.lable}}
+        {{ link.lable }}
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -34,16 +32,18 @@
 
 <script setup>
 
-import {ref} from "vue";
+import {computed, ref} from "vue";
+import {useAppStore} from "@/store/app";
 
-let rail = ref(false)
-  const toggleMenu = () => {
-    rail.value = ! rail.value
-  }
-  const links = [
-    {lable: 'Students', icon: 'mdi-home-city', value: '/students'},
-    {lable: 'Exams', icon: 'mdi-bookshelf', value: '/exams'},
-  ]
+const store = useAppStore()
+const isAdmin = computed(() => {
+  return store.getUser.email.includes('admin@dev.com') ? 'Admin' : 'Student'
+})
+
+const links = [
+  {lable: 'Students', icon: 'mdi-home-city', value: '/students'},
+  {lable: 'Exams', icon: 'mdi-bookshelf', value: '/exams'},
+]
 </script>
 
 <style scoped>
