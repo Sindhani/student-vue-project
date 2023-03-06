@@ -42,6 +42,7 @@ let rail = ref(false)
   }
   const links = [
     {lable: 'Students', icon: 'mdi-home-city', value: '/students'},
+    {lable: 'Exams', icon: 'mdi-bookshelf', value: '/exams'},
   ]
 </script>
 
