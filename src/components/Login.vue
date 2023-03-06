@@ -34,7 +34,7 @@ import {useAppStore} from "@/store/app";
 const store = useAppStore()
 // call the action as a method of the store
 const errors = ref('')
-const form = reactive({email: 'admin@dev.com', password: '123456'})
+const form = reactive({email: null, password: null})
 let loader = ref(false)
 const toggleLoader = () => {
   loader.value = !loader.value
