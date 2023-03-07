@@ -31,6 +31,9 @@
                   </tr>
                   </thead>
                   <tbody>
+                  <tr v-if="!students.length">
+                    <td colspan="4" class="text-center">No data found</td>
+                  </tr>
                   <tr
                     v-for="item in students"
                     :key="item.name"
