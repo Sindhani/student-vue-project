@@ -67,7 +67,8 @@
 <script setup>
 import {defineProps, defineEmits, reactive} from "vue";
 import {examsRef} from '@/plugins/firebase'
-import {collection, doc, setDoc} from "firebase/firestore";
+import {collection, doc, setDoc, addDoc} from "firebase/firestore";
+import {useFirestore} from "vuefire";
 
 
 const form = reactive({
@@ -79,10 +80,12 @@ const form = reactive({
 defineProps(['modelValue'])
 
 const emit = defineEmits(['update:modelValue'])
+const db = useFirestore()
 
 // Add a new document in collection "cities"
 const save = async () => {
-  await setDoc(doc(examsRef, "exams"), {
+  const examsRefs = collection(db, 'exams');
+  await addDoc(examsRefs, {
     exam_name: form.exam_name,
     user_id: form.user_id,
     schedule_on: form.schedule_on,

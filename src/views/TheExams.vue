@@ -32,6 +32,9 @@
                   </tr>
                   </thead>
                   <tbody>
+                  <tr v-if="!exams.length">
+                    <td colspan="3" class="text-center">No data found</td>
+                  </tr>
                   <tr
                     v-for="exam in exams"
                     :key="exam.name"
@@ -40,7 +43,7 @@
                     <td>{{ dayJs(exam.schedule_on.seconds).format('DD-MM-YYYY') }}</td>
                     <td>
                       <v-icon size="large" icon="mdi-eye"></v-icon>
-                      <v-icon size="large" icon="mdi-delete-circle" @click="deleteRow(item)"></v-icon>
+                      <v-icon size="large" icon="mdi-delete-circle" @click="deleteRow(exam)"></v-icon>
 
                     </td>
                   </tr>
@@ -70,7 +73,7 @@ const exams = useCollection(collection(db, 'exams'))
 const dialogue = ref(false)
 const dayJs = inject('dayJs')
 const deleteRow = async (item) => {
-  await deleteDoc(doc(db, "exams", item));
+  await deleteDoc(doc(db, "exams", item.id));
 }
 
 </script>

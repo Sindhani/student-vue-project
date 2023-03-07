@@ -36,6 +36,7 @@
                     :key="item.name"
                   >
 
+
                     <td>{{ item.name }}</td>
                     <td>{{ item.age }}</td>
                     <td>{{ item.class }}</td>

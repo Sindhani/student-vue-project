@@ -75,7 +75,7 @@
           </v-container>
         </v-card-text>
         <v-card-actions>
-          <p v-if="errors" class="text-red">{{errors}}</p>
+          <p v-if="errors" class="text-red">{{ errors }}</p>
           <v-spacer></v-spacer>
 
           <v-btn
@@ -107,7 +107,8 @@ import {createUserWithEmailAndPassword} from 'firebase/auth'
 import {auth} from '@/plugins/firebase'
 
 import {studentsRef} from '@/plugins/firebase'
-import {doc, setDoc} from "firebase/firestore";
+import {addDoc, doc, setDoc, collection} from "firebase/firestore";
+import {useFirestore} from "vuefire";
 
 const form = reactive({
   name: null,
@@ -123,13 +124,15 @@ const emit = defineEmits(['update:modelValue'])
 const loader = ref(false)
 const errors = ref('')
 const toggleLoader = () => {
-  loader.value = ! loader.value
+  loader.value = !loader.value
 }
+const db = useFirestore()
 // Add a new document in collection "students"
 const save = async () => {
   toggleLoader()
   await createUser()
-  await setDoc(doc(studentsRef, "students"), {
+  const studentsRef = collection(db, 'students')
+  await addDoc(studentsRef, {
     name: form.name,
     age: form.age,
     class: form.class,
@@ -138,12 +141,12 @@ const save = async () => {
   emit('update:modelValue', false)
 }
 const createUser = async () => {
-  try{
+  try {
     const {user} = await createUserWithEmailAndPassword(auth, form.email, form.password)
     if (user.email) {
       return user
     }
-  } catch (e){
+  } catch (e) {
     errors.value = e.message
   } finally {
     toggleLoader()
