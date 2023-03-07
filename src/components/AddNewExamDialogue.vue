@@ -6,7 +6,7 @@
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">User Profile</span>
+          <span class="text-h5">Exam</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -14,26 +14,13 @@
               <v-col
                 cols="12"
                 sm="6"
-                md="6"
               >
-                <v-select
-                  :items="users"
-                  label="Select User"
-                  v-model="form.user_id"
-                  required
-                ></v-select>
-
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-select
-                  :items="examsOptions"
-                  label="Select Exam"
+                <v-text-field
+                  type="text"
+                  label="Exam"
                   v-model="form.exam_name"
                   required
-                ></v-select>
+                ></v-text-field>
               </v-col>
               <v-col
                 cols="12"
@@ -92,7 +79,6 @@ const form = reactive({
 defineProps(['modelValue'])
 
 const emit = defineEmits(['update:modelValue'])
-const examsOptions = ['TOEFL', 'IELTS', 'CCNA', 'CCIE', 'CCSP', 'MOS', 'MCSE', 'MCSP']
 
 // Add a new document in collection "cities"
 const save = async () => {
